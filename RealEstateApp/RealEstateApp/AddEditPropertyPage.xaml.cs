@@ -2,7 +2,9 @@
 using RealEstateApp.Services;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using TinyIoC;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -27,10 +29,10 @@ namespace RealEstateApp
                 {
                     SelectedAgent = Agents.FirstOrDefault(x => x.Id == _property?.AgentId);
                 }
-               
+
             }
         }
-    
+
         private Agent _selectedAgent;
 
         public Agent SelectedAgent
@@ -42,7 +44,7 @@ namespace RealEstateApp
                 {
                     _selectedAgent = value;
                     Property.AgentId = _selectedAgent?.Id;
-                }                 
+                }
             }
         }
 
@@ -68,7 +70,7 @@ namespace RealEstateApp
                 Title = "Edit Property";
                 Property = property;
             }
-         
+
             BindingContext = this;
         }
 
@@ -83,7 +85,7 @@ namespace RealEstateApp
             {
                 Repository.SaveProperty(Property);
                 await Navigation.PopToRootAsync();
-            }   
+            }
         }
 
         public bool IsValid()
@@ -100,6 +102,29 @@ namespace RealEstateApp
         private async void CancelSave_Clicked(object sender, System.EventArgs e)
         {
             await Navigation.PopToRootAsync();
+        }
+
+        private async void GoalocationAsync(object sender, System.EventArgs e)
+        {
+            try
+            {
+                var location = await Geolocation.GetLocationAsync();
+                Property.Longitude = location.Longitude;
+                Property.Latitude = location.Latitude;
+            }
+            catch (FeatureNotSupportedException)
+            {
+
+                //  Ignore for now
+            }
+            catch (FeatureNotEnabledException)
+            {
+                //  Ignore for now
+            }
+            catch (PermissionException)
+            {
+                //  Ignore for now
+            }
         }
     }
 }

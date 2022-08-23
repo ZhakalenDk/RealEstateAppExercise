@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:models="clr-namespace:RealEstateApp.Models"
              xmlns:converters="clr-namespace:RealEstateApp.Converters"
              xmlns:fa="clr-namespace:FontAwesome"
              mc:Ignorable="d"
@@ -33,6 +34,22 @@
                         </Label.FormattedText>
                     </Label>
                     <Entry FontSize="Medium" Text="{Binding Property.Address}" />
+                    <Grid RowDefinitions="*,*" ColumnDefinitions="*,*,*">
+                        <Label FontSize="Medium"
+                                FontFamily="FA-solid">Location</Label>
+                        <Label x:Name="Lat" Grid.Row="1"
+                               HorizontalOptions="EndAndExpand"
+                               VerticalOptions="Center"
+                               Text="{Binding Property.Latitude, TargetNullValue='NaN'}"/>
+                        <Label x:Name="Lon" Grid.Row="1" Grid.Column="1"
+                               HorizontalOptions="EndAndExpand"
+                               VerticalOptions="Center"
+                               Text="{Binding Property.Longitude, TargetNullValue='NaN'}"/>
+                        <Button Grid.Row="1" Grid.Column="2"
+                                FontFamily="FA-solid"
+                                Text="{x:Static fa:IconFont.Thumbtack}"
+                                Clicked="GoalocationAsync"/>
+                    </Grid>
 
                     <Label FontSize="Medium" FontFamily="FA-solid">
                         <Label.FormattedText>
@@ -90,7 +107,7 @@
                         Keyboard="Numeric"
                         ReturnType="Next"
                         Text="{Binding Property.Parking, Converter={converters:NullableIntConverter}}" />
-                    
+
                     <Label FontSize="Medium" FontFamily="FA-solid">
                         <Label.FormattedText>
                             <FormattedString>
@@ -107,7 +124,7 @@
                         Keyboard="Numeric"
                         ReturnType="Next"
                         Text="{Binding Property.LandSize, Converter={converters:NullableIntConverter}}" />
-                    
+
                     <Label FontSize="Medium" FontFamily="FA-solid">
                         <Label.FormattedText>
                             <FormattedString>
