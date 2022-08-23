@@ -3,11 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:RealEstateApp.Converters"
              xmlns:fa="clr-namespace:FontAwesome"
              mc:Ignorable="d"
              x:Class="RealEstateApp.PropertyDetailPage"
              Title="{Binding Property.Address}">
-    
+
     <ContentPage.ToolbarItems>
         <ToolbarItem Clicked="EditProperty_Clicked"  Text="Edit" />
     </ContentPage.ToolbarItems>
@@ -69,12 +70,29 @@
                 Grid.Row="4"
                 FontSize="14"
                 Text="{Binding Property.LandSize, StringFormat='Land size: {0} &#x33a1;'}" />
-            <Label
-                Grid.Row="5"
+            <StackLayout Grid.Row="5" Orientation="Horizontal">
+                <Label
                 Margin="0,20,0,0"
                 FontAttributes="Bold"
                 FontSize="14"
                 Text="Description:" />
+                <Button FontFamily="FA-solid"
+                        HeightRequest="10"
+                        WidthRequest="50"
+                        HorizontalOptions="EndAndExpand"
+                        BackgroundColor="Green"
+                        Text="{x:Static fa:IconFont.Play}"
+                        IsVisible="{Binding IsPlaying, Converter={converters:InverseBoolConverter}}"
+                        Clicked="StartTTS"/>
+                <Button FontFamily="FA-solid"
+                        HeightRequest="10"
+                        WidthRequest="50"
+                        HorizontalOptions="EndAndExpand"
+                        BackgroundColor="Red"
+                        Text="{x:Static fa:IconFont.Stop}"
+                        IsVisible="{Binding IsPlaying}"
+                        Clicked="StopTTS"/>
+            </StackLayout>
             <Label
                 Grid.Row="6"
                 Margin="0,0,0,20"
