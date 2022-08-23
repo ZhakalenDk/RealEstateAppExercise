@@ -73,14 +73,14 @@ namespace RealEstateApp
 
         private async void ShowDistanceAsync(object sender, EventArgs e)
         {
-            await SortAsync();
-            LoadProperties();
-        }
-
-        private async Task SortAsync()
-        {
             _lastKnownLocation = await Geolocation.GetLastKnownLocationAsync() ?? await Geolocation.GetLocationAsync();
 
+            LoadProperties();
+            SortAsync();
+        }
+
+        private void SortAsync()
+        {
             PropertiesCollection = new ObservableCollection<PropertyListItem>(PropertiesCollection.OrderBy(pl => pl.Distance));
         }
     }
