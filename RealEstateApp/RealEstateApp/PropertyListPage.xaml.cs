@@ -2,6 +2,7 @@
 using RealEstateApp.Services;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using TinyIoC;
 using Xamarin.Essentials;
@@ -14,7 +15,7 @@ namespace RealEstateApp
     public partial class PropertyListPage : ContentPage
     {
         IRepository Repository;
-        public ObservableCollection<PropertyListItem> PropertiesCollection { get; } = new ObservableCollection<PropertyListItem>();
+        public ObservableCollection<PropertyListItem> PropertiesCollection { get; private set; } = new ObservableCollection<PropertyListItem>();
 
         public PropertyListPage()
         {
@@ -79,6 +80,8 @@ namespace RealEstateApp
         private async Task SortAsync()
         {
             _lastKnownLocation = await Geolocation.GetLastKnownLocationAsync() ?? await Geolocation.GetLocationAsync();
+
+            PropertiesCollection = new ObservableCollection<PropertyListItem>(PropertiesCollection.OrderBy(pl => pl.Distance));
         }
     }
 }

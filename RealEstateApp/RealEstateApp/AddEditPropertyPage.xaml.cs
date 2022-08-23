@@ -29,7 +29,20 @@ namespace RealEstateApp
                 {
                     SelectedAgent = Agents.FirstOrDefault(x => x.Id == _property?.AgentId);
                 }
+            }
+        }
 
+        private bool _hasConnection = true;
+        public bool HasConnection
+        {
+            get => _hasConnection;
+            set
+            {
+                if (_hasConnection != value)
+                {
+                    _hasConnection = value;
+                    OnPropertyChanged(nameof(_hasConnection));
+                }
             }
         }
 
@@ -72,6 +85,29 @@ namespace RealEstateApp
             }
 
             BindingContext = this;
+        }
+
+        protected override void OnAppearing()
+        {
+            Connectivity.ConnectivityChanged += CheckConnection;
+        }
+
+        protected override void OnDisappearing()
+        {
+            Connectivity.ConnectivityChanged -= CheckConnection;
+        }
+
+        private void CheckConnection(object sender, ConnectivityChangedEventArgs e)
+        {
+            if (Connectivity.NetworkAccess != NetworkAccess.Internet)
+            {
+                DisplayAlert("No Connection", "Geolocation is turned off", "OK");
+                HasConnection = false;
+            }
+            else
+            {
+                HasConnection = true;
+            }
         }
 
         private async void SaveProperty_Clicked(object sender, System.EventArgs e)

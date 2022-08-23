@@ -12,7 +12,7 @@
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Clicked="CancelSave_Clicked" Text="Cancel" />
-        <ToolbarItem Clicked="SaveProperty_Clicked" Text="Save" />
+        <ToolbarItem Clicked="SaveProperty_Clicked" Text="Save"/>
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
@@ -53,10 +53,12 @@
                                VerticalOptions="Center"
                                Text="{Binding Property.Longitude, TargetNullValue='NaN'}"/>
                         <Button Grid.Row="1" Grid.Column="2"
+                                IsEnabled="{Binding HasConnection}"
                                 FontFamily="FA-solid"
                                 Text="{x:Static fa:IconFont.Thumbtack}"
                                 Clicked="AutoFillAddressAsync"/>
                         <Button Grid.Row="1" Grid.Column="3"
+                                IsEnabled="{Binding HasConnection}"
                                 FontFamily="FA-solid"
                                 Text="{x:Static fa:IconFont.Home}"
                                 Clicked="AutoFillGeolocationAsync"/>
