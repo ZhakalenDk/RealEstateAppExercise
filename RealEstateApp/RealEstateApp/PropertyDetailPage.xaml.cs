@@ -42,7 +42,7 @@ namespace RealEstateApp
             }
         }
 
-        private CancellationTokenSource cSource = new CancellationTokenSource();
+        private CancellationTokenSource _cSource = new CancellationTokenSource();
 
         private async void EditProperty_Clicked(object sender, System.EventArgs e)
         {
@@ -52,15 +52,15 @@ namespace RealEstateApp
         private async void StartTTS(object sender, System.EventArgs e)
         {
             IsPlaying = true;
-            await TextToSpeech.SpeakAsync(Property.Description, cSource.Token);
+            await TextToSpeech.SpeakAsync(Property.Description, _cSource.Token);
             IsPlaying = false;
         }
 
         private void StopTTS(object sender, System.EventArgs e)
         {
-            cSource.Cancel();
+            _cSource.Cancel();
             IsPlaying = false;
-            cSource = new CancellationTokenSource();
+            _cSource = new CancellationTokenSource();
         }
     }
 }
