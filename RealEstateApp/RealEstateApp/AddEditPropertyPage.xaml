@@ -38,11 +38,11 @@
                         <Label FontSize="Medium"
                                 FontFamily="FA-solid">Location</Label>
                         <Label x:Name="Lat" Grid.Row="1"
-                               HorizontalOptions="EndAndExpand"
+                               HorizontalOptions="Start"
                                VerticalOptions="Center"
                                Text="{Binding Property.Latitude, TargetNullValue='NaN'}"/>
                         <Label x:Name="Lon" Grid.Row="1" Grid.Column="1"
-                               HorizontalOptions="EndAndExpand"
+                               HorizontalOptions="End"
                                VerticalOptions="Center"
                                Text="{Binding Property.Longitude, TargetNullValue='NaN'}"/>
                         <Button Grid.Row="1" Grid.Column="2"
