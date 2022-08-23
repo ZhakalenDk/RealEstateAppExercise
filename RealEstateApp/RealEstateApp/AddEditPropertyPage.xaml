@@ -34,9 +34,16 @@
                         </Label.FormattedText>
                     </Label>
                     <Entry FontSize="Medium" Text="{Binding Property.Address}" />
-                    <Grid RowDefinitions="*,*" ColumnDefinitions="*,*,*">
-                        <Label FontSize="Medium"
-                                FontFamily="FA-solid">Location</Label>
+                    <Grid RowDefinitions="*,*" ColumnDefinitions="*,*,*,*">
+                        <Label FontSize="Medium" FontFamily="FA-solid">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="{Static fa:IconFont.MapPin}"/>
+                                    <Span Text=" " />
+                                    <Span Text="Location" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
                         <Label x:Name="Lat" Grid.Row="1"
                                HorizontalOptions="Start"
                                VerticalOptions="Center"
@@ -48,7 +55,11 @@
                         <Button Grid.Row="1" Grid.Column="2"
                                 FontFamily="FA-solid"
                                 Text="{x:Static fa:IconFont.Thumbtack}"
-                                Clicked="GoalocationAsync"/>
+                                Clicked="AutoFillAddressAsync"/>
+                        <Button Grid.Row="1" Grid.Column="3"
+                                FontFamily="FA-solid"
+                                Text="{x:Static fa:IconFont.Home}"
+                                Clicked="AutoFillGeolocationAsync"/>
                     </Grid>
 
                     <Label FontSize="Medium" FontFamily="FA-solid">
