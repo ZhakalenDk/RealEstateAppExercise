@@ -1,5 +1,6 @@
 ﻿using RealEstateApp.Models;
 using RealEstateApp.Services;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -130,13 +131,33 @@ namespace RealEstateApp
                 || Property.Beds == null
                 || Property.Price == null
                 || Property.AgentId == null)
+            {
+                try
+                {
+                    Vibration.Vibrate(TimeSpan.FromSeconds(5));
+                }
+                catch (NotSupportedException)
+                {
+                    //  Ignore for now
+                }
+                catch (FeatureNotEnabledException)
+                {
+                    //  Ignore for now
+                }
+                catch (PermissionException)
+                {
+                    //  Ignore for now
+                }
+
                 return false;
+            }
 
             return true;
         }
 
         private async void CancelSave_Clicked(object sender, System.EventArgs e)
         {
+            Vibration.Cancel();
             await Navigation.PopToRootAsync();
         }
 
