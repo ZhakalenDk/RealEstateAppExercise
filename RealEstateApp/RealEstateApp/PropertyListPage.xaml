@@ -9,8 +9,11 @@
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Add" Clicked="AddProperty_Clicked" />
+        <ToolbarItem Text="{x:Static fa:IconFont.Sort}"
+                     IconImageSource="fa_sort_amount_asc.png"
+                     Clicked="ShowDistanceAsync" />
     </ContentPage.ToolbarItems>
-    
+
     <StackLayout>
         <ListView
             x:Name="ItemsListView"
@@ -44,6 +47,7 @@
                                 Source="{Binding Property.MainImageUrl}" />
                             <Grid Grid.Column="1" Margin="0,0,10,0">
                                 <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
@@ -101,6 +105,10 @@
                                     Grid.Row="3"
                                     FontSize="13"
                                     Text="{Binding Property.LandSize, StringFormat='Land Size: {0} &#x33a1;'}" />
+                                <Label
+                                    Grid.Row="4"
+                                    FontSize="13"
+                                    Text="{Binding Distance, StringFormat='{0:f2}km away', TargetNullValue='NaN'}"/>
                             </Grid>
                         </Grid>
                     </ViewCell>
