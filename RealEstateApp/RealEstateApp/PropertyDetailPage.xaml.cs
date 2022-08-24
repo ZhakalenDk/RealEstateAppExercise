@@ -62,5 +62,10 @@ namespace RealEstateApp
             IsPlaying = false;
             _cSource = new CancellationTokenSource();
         }
+
+        private async void OnImageClick(object sender, System.EventArgs e)
+        {
+            await Navigation.PushAsync(new ImageListPage(Property));
+        }
     }
 }
