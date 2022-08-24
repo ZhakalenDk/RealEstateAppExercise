@@ -21,5 +21,12 @@
                                  Color="Black"/>
             </ShellContent.Icon>
         </ShellContent>
+        <ShellContent Title="Height calculator" ContentTemplate="{DataTemplate views:HeightCalculatorPage}">
+            <ShellContent.Icon>
+                <FontImageSource FontFamily="FA-solid"
+                                 Glyph="{x:Static icons:IconFont.ArrowUp}"
+                                 Color="Black"/>
+            </ShellContent.Icon>
+        </ShellContent>
     </FlyoutItem>
 </Shell>

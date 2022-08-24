@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:RealEstateApp.Converters"
+             x:Class="RealEstateApp.HeightCalculatorPage">
+    <ContentPage.Content>
+        <StackLayout Margin="10,10">
+            <Label HorizontalOptions="CenterAndExpand"
+                   VerticalOptions="Start"
+                   FontSize="Medium"
+                   Text="{Binding AltitudeInMeters, StringFormat='Current Altitude: {0:f2} m'}"/>
+            <Entry Margin="0,25,0,0" VerticalOptions="Start"
+                   Placeholder="Measurement Label"
+                   Text="{Binding LabelText}"/>
+            <Button IsEnabled="{Binding LabelText,Converter={converters:StringBoolConverter}}" 
+                    Text="Save"
+                    Clicked="SaveData"/>
+            <ListView Margin="20,0" VerticalOptions="Start"
+                      ItemsSource="{Binding Measurements}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{Binding Display}"/>
+                                <Label IsVisible="{Binding HeightChange, Converter={converters:HasValueConverter}}"
+                                       Text="{Binding HeightChange, StringFormat='{0:+#;-#}m'}"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <Label HorizontalOptions="CenterAndExpand"
+                   VerticalOptions="EndAndExpand"
+                   Text="{Binding CurrentPressure, StringFormat='Current Pressure: {0:f2}'}"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
