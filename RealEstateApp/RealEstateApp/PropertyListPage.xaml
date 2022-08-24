@@ -9,9 +9,10 @@
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Add" Clicked="AddProperty_Clicked" />
-        <ToolbarItem Text="{x:Static fa:IconFont.Sort}"
-                     IconImageSource="fa_sort_amount_asc.png"
+        <ToolbarItem IconImageSource="fa_sort_amount_asc.png"
                      Clicked="ShowDistanceAsync" />
+        <ToolbarItem x:Name="flashLightBtn" IconImageSource="FlashlightOff.png"
+                     Clicked="FlashlightOnOff"/>
     </ContentPage.ToolbarItems>
 
     <StackLayout>

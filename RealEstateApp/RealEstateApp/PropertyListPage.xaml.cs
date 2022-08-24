@@ -28,6 +28,8 @@ namespace RealEstateApp
 
         private Location _lastKnownLocation;
 
+        private bool _flashlightOff = true;
+
         protected override void OnAppearing()
         {
             base.OnAppearing();
@@ -82,6 +84,17 @@ namespace RealEstateApp
         private void SortAsync()
         {
             PropertiesCollection = new ObservableCollection<PropertyListItem>(PropertiesCollection.OrderBy(pl => pl.Distance));
+        }
+
+        private async void FlashlightOnOff(object sender, EventArgs e)
+        {
+            if (_flashlightOff)
+                await Flashlight.TurnOnAsync();
+            else
+                await Flashlight.TurnOffAsync();
+
+            _flashlightOff = !_flashlightOff;
+            flashLightBtn.IconImageSource = ((_flashlightOff) ? ("FlashlightOff.png") : ("FlashlightOn.png"));
         }
     }
 }
