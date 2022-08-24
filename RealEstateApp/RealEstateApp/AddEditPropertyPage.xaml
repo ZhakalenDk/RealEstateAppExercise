@@ -64,6 +64,25 @@
                                 Clicked="AutoFillGeolocationAsync"/>
                     </Grid>
 
+                    <Grid RowDefinitions="*,*" ColumnDefinitions="3*,*">
+                        <Label FontSize="Medium" FontFamily="FA-solid">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="{Static fa:IconFont.Compass}"/>
+                                    <Span Text=" " />
+                                    <Span Text="Aspect" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <Entry Grid.Row="1"
+                               IsReadOnly="True"
+                               Text="{Binding Property.Aspect, Mode=OneWay}"/>
+                        <Button Grid.Row="1" Grid.Column="1"
+                                FontFamily="FA-solid"
+                                Text="{x:Static fa:IconFont.DraftingCompass}"
+                                Clicked="StartCompass"/>
+                    </Grid>
+
                     <Label FontSize="Medium" FontFamily="FA-solid">
                         <Label.FormattedText>
                             <FormattedString>

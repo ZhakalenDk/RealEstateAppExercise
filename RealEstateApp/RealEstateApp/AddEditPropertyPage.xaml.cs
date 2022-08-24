@@ -65,6 +65,20 @@ namespace RealEstateApp
         public string StatusMessage { get; set; }
 
         public Color StatusColor { get; set; } = Color.White;
+
+        private string _aspect;
+        public string Aspect
+        {
+            get => _aspect;
+            set
+            {
+                if (_aspect != value)
+                {
+                    _aspect = value;
+                    OnPropertyChanged(nameof(_aspect));
+                }
+            }
+        }
         #endregion
 
         public AddEditPropertyPage(Property property = null)
@@ -111,7 +125,7 @@ namespace RealEstateApp
             }
         }
 
-        private async void SaveProperty_Clicked(object sender, System.EventArgs e)
+        private async void SaveProperty_Clicked(object sender, EventArgs e)
         {
             if (IsValid() == false)
             {
@@ -155,13 +169,13 @@ namespace RealEstateApp
             return true;
         }
 
-        private async void CancelSave_Clicked(object sender, System.EventArgs e)
+        private async void CancelSave_Clicked(object sender, EventArgs e)
         {
             Vibration.Cancel();
             await Navigation.PopToRootAsync();
         }
 
-        private async void AutoFillAddressAsync(object sender, System.EventArgs e)
+        private async void AutoFillAddressAsync(object sender, EventArgs e)
         {
             try
             {
@@ -188,7 +202,7 @@ namespace RealEstateApp
             }
         }
 
-        private async void AutoFillGeolocationAsync(object sender, System.EventArgs e)
+        private async void AutoFillGeolocationAsync(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(Property.Address)) { await DisplayAlert("Whoops", "Seems like you forgot to type an address", "I'll fill it"); return; }
 
@@ -212,6 +226,11 @@ namespace RealEstateApp
 
             Property.Latitude = location.Latitude;
             Property.Longitude = location.Longitude;
+        }
+
+        private async void StartCompass(object sender, EventArgs e)
+        {
+            await Navigation.PushModalAsync(new NavigationPage(new CompassPage(Property)));
         }
     }
 }
