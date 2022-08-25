@@ -1,5 +1,8 @@
 ﻿using RealEstateApp.Models;
 using RealEstateApp.Services;
+using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using TinyIoC;
@@ -66,6 +69,48 @@ namespace RealEstateApp
         private async void OnImageClick(object sender, System.EventArgs e)
         {
             await Navigation.PushAsync(new ImageListPage(Property));
+        }
+
+        private async void SendMail(object sender, System.EventArgs e)
+        {
+            var folder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            var attachmentFilePath = Path.Combine(folder, "property.txt");
+            File.WriteAllText(attachmentFilePath, $"{Property.Address}");
+
+            try
+            {
+                EmailMessage message = new EmailMessage
+                {
+                    To = new List<string> { Property.Vendor.Email },
+                    Subject = $"Regarding: {Property.Address}",
+                    Body = string.Empty
+                };
+
+                message.Attachments.Add(new EmailAttachment(attachmentFilePath));
+
+                await Email.ComposeAsync(message);
+            }
+            catch (FeatureNotSupportedException)
+            {
+                await DisplayAlert("Whoops", "Emails are not supported by your system", "OK");
+            }
+        }
+
+        private async void OnPhone(object sender, System.EventArgs e)
+        {
+            var choice = await DisplayActionSheet(Property.Vendor.Phone, "Cancel", null, new[] { "Call", "SMS" });
+
+            try
+            {
+                if (choice == "Call")
+                    PhoneDialer.Open(Property.Vendor.Phone);
+                else if (choice == "SMS")
+                    await Sms.ComposeAsync(new SmsMessage { Recipients = new List<string> { Property.Vendor.Phone } });
+            }
+            catch (FeatureNotSupportedException)
+            {
+                await DisplayAlert("Whoops", "Feature is not supported by your system", "OK");
+            }
         }
     }
 }

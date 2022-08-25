@@ -14,8 +14,9 @@
     </ContentPage.ToolbarItems>
 
     <ScrollView VerticalOptions="FillAndExpand">
-        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" 
+        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" 
               Padding="15">
+            <!--Header image-->
             <Image
                 Grid.Row="0"
                 Margin="-10,-10,-10,0"
@@ -26,17 +27,20 @@
                     <TapGestureRecognizer Tapped="OnImageClick"/>
                 </Image.GestureRecognizers>
             </Image>
+            <!--Price-->
             <Label
                 Grid.Row="1"
                 FontAttributes="Bold"
                 FontSize="16"
                 LineBreakMode="NoWrap"
                 Text="{Binding Property.Price, StringFormat='{0:C0}'}" />
+            <!--Address-->
             <Label
                 Grid.Row="2"
                 FontSize="16"
                 LineBreakMode="NoWrap"
                 Text="{Binding Property.Address}" />
+            <!--Details-->
             <Grid Grid.Row="3"
                   RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto">
                 <Label
@@ -70,10 +74,12 @@
                     FontSize="16"
                     Text="{Binding Property.Parking}" />
             </Grid>
+            <!--Land size-->
             <Label
                 Grid.Row="4"
                 FontSize="14"
                 Text="{Binding Property.LandSize, StringFormat='Land size: {0} &#x33a1;'}" />
+            <!--Description header-->
             <StackLayout Grid.Row="5" Orientation="Horizontal">
                 <Label
                 Margin="0,20,0,0"
@@ -97,17 +103,67 @@
                         IsVisible="{Binding IsPlaying}"
                         Clicked="StopTTS"/>
             </StackLayout>
+            <!--Description-->
             <Label
                 Grid.Row="6"
                 Margin="0,0,0,20"
                 FontSize="14"
                 Text="{Binding Property.Description}" />
+
+            <!--Vendor details-->
+            <StackLayout Margin="0,20"
+                         Grid.Row="7">
+                <Label FontAttributes="Bold"
+                       FontSize="14"
+                       Text="Vendor:"/>
+                <Label FontAttributes="Bold"
+                       FontFamily="FA-solid">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="{x:Static fa:IconFont.UserCircle}"/>
+                            <Span Text=" "/>
+                            <Span Text="{Binding Property.Vendor.FullName}"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Label>
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span FontFamily="FA-solid"
+                                  Text="{x:Static fa:IconFont.Envelope}"/>
+                            <Span Text=" "/>
+                            <Span TextDecorations="Underline"
+                                  TextColor="Blue"
+                                  Text="{Binding Property.Vendor.Email}"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="SendMail"/>
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label>
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span FontFamily="FA-solid"
+                                  Text="{x:Static fa:IconFont.Phone}"/>
+                            <Span Text=" "/>
+                            <Span TextDecorations="Underline"
+                                  TextColor="Blue"
+                                  Text="{Binding Property.Vendor.Phone}"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnPhone"/>
+                    </Label.GestureRecognizers>
+                </Label>
+            </StackLayout>
+            <!--Agent details-->
             <Label
-                Grid.Row="7"
+                Grid.Row="8"
                 FontAttributes="Bold"
                 FontSize="14"
                 Text="Listed by:" />
-            <Grid Grid.Row="8">
+            <Grid Grid.Row="9">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
