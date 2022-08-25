@@ -1,4 +1,5 @@
-﻿using RealEstateApp.Models;
+﻿using System.Text.Json;
+using RealEstateApp.Models;
 using RealEstateApp.Services;
 using System;
 using System.Collections.Generic;
@@ -176,6 +177,36 @@ namespace RealEstateApp
             };
 
             await Launcher.OpenAsync(file);
+        }
+
+        private async void ShareProperty(object sender, EventArgs e)
+        {
+            var share = new ShareTextRequest
+            {
+                Uri = Property.NeighbourhoodUrl,
+                Subject = "A property you might be interested in",
+                Text = $"{Property.Address}{Environment.NewLine}{Property.Beds} Bedrooms{Environment.NewLine}{Property.Price:C2}",
+                Title = "Share Property"
+            };
+
+            await Share.RequestAsync(share);
+        }
+
+        private async void ShareContract(object sender, EventArgs e)
+        {
+            var share = new ShareFileRequest
+            {
+                File = new ShareFile(Property.ContractFilePath)
+            };
+
+            await Share.RequestAsync(share);
+        }
+
+        private async void CopyToClip(object sender, EventArgs e)
+        {
+            string propertyJson = JsonSerializer.Serialize(Property);
+
+            await Clipboard.SetTextAsync(propertyJson);
         }
     }
 }

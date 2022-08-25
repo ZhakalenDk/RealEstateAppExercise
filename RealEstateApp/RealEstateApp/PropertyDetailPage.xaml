@@ -14,7 +14,7 @@
     </ContentPage.ToolbarItems>
 
     <ScrollView VerticalOptions="FillAndExpand">
-        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" 
+        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" 
               Padding="15">
             <!--Header image-->
             <Image
@@ -130,15 +130,30 @@
                 FontSize="14"
                 Text="{Binding Property.Description}" />
 
-            <!--File Button-->
+            <!--Contract Button-->
             <Button Grid.Row="7"
                     FontFamily="FA-solid"
                     Text="{x:Static fa:IconFont.FileSignature}"
                     Clicked="OpenFile"/>
 
+            <!--Share Button-->
+            <StackLayout Orientation="Horizontal"
+                         Grid.Row="8"
+                         HorizontalOptions="Center">
+                <Button FontFamily="FA-solid"
+                        Text="{x:Static fa:IconFont.ShareAlt}"
+                        Clicked="ShareProperty"/>
+                <Button FontFamily="FA-solid"
+                        Text="{x:Static fa:IconFont.ShareSquare}"
+                        Clicked="ShareContract"/>
+                <Button FontFamily="FA-solid"
+                        Text="{x:Static fa:IconFont.Clipboard}"
+                        Clicked="CopyToClip"/>
+            </StackLayout>
+
             <!--Vendor details-->
             <StackLayout Margin="0,20"
-                         Grid.Row="8">
+                         Grid.Row="9">
                 <Label FontAttributes="Bold"
                        FontSize="14"
                        Text="Vendor:"/>
@@ -185,11 +200,11 @@
             </StackLayout>
             <!--Agent details-->
             <Label
-                Grid.Row="9"
+                Grid.Row="10"
                 FontAttributes="Bold"
                 FontSize="14"
                 Text="Listed by:" />
-            <Grid Grid.Row="9">
+            <Grid Grid.Row="11">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />

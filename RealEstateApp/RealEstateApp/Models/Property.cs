@@ -36,7 +36,6 @@ namespace RealEstateApp.Models
         public string NeighbourhoodUrl { get; set; }
         public string ContractFilePath { get; set; }
 
-
         public string MainImageUrl => ImageUrls?.FirstOrDefault() ?? GlobalSettings.Instance.NoImageUrl;
     }
 }
