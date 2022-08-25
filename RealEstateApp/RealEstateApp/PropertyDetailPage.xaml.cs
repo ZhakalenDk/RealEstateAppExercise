@@ -156,5 +156,26 @@ namespace RealEstateApp
                 //  Ignore for now
             }
         }
+
+        private async void OpenBrowser(object sender, EventArgs e)
+        {
+            var options = new BrowserLaunchOptions
+            {
+                LaunchMode = BrowserLaunchMode.SystemPreferred,
+                TitleMode = BrowserTitleMode.Hide
+            };
+
+            await Browser.OpenAsync(Property.NeighbourhoodUrl, options);
+        }
+
+        private async void OpenFile(object sender, EventArgs e)
+        {
+            var file = new OpenFileRequest
+            {
+                File = new ReadOnlyFile(Property.ContractFilePath)
+            };
+
+            await Launcher.OpenAsync(file);
+        }
     }
 }

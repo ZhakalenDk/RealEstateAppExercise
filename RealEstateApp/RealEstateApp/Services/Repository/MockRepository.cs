@@ -1,7 +1,10 @@
 ﻿using RealEstateApp.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
+using System.IO;
 using System.Linq;
+using Xamarin.Essentials;
 
 namespace RealEstateApp.Services.Repository
 {
@@ -9,9 +12,11 @@ namespace RealEstateApp.Services.Repository
     {
         private List<Agent> _agents;
         private List<Property> _properties;
+        private string _contractFilePath;
 
         public MockRepository()
         {
+            LoadFiles();
             LoadProperties();
             LoadAgents();
         }
@@ -69,8 +74,8 @@ namespace RealEstateApp.Services.Repository
                 Email = "wgrant@pluralsight.com",
                 Phone = "+61423555712"
             },
-            //NeighbourhoodUrl = "https://en.wikipedia.org/wiki/Collaroy,_New_South_Wales",
-            //ContractFilePath = _contractFilePath,
+            NeighbourhoodUrl = "https://en.wikipedia.org/wiki/Collaroy,_New_South_Wales",
+            ContractFilePath = _contractFilePath,
             Aspect = "North"
         },
         new Property
@@ -88,8 +93,8 @@ namespace RealEstateApp.Services.Repository
                 Email = "acooper@pluralsight.com",
                 Phone = "+61290014312"
             },
-            //NeighbourhoodUrl = "https://en.wikipedia.org/wiki/Collaroy,_New_South_Wales",
-            //ContractFilePath = _contractFilePath,
+            NeighbourhoodUrl = "https://en.wikipedia.org/wiki/Collaroy,_New_South_Wales",
+            ContractFilePath = _contractFilePath,
             Aspect = "East"
         },
         new Property
@@ -106,8 +111,8 @@ namespace RealEstateApp.Services.Repository
                 Email = "mpickering@pluralsight.com",
                 Phone = "0429008145"
             },
-            //NeighbourhoodUrl = "https://en.wikipedia.org/wiki/Collaroy,_New_South_Wales",
-            //ContractFilePath = _contractFilePath,
+            NeighbourhoodUrl = "https://en.wikipedia.org/wiki/Collaroy,_New_South_Wales",
+            ContractFilePath = _contractFilePath,
             Aspect = "South"
         },
         new Property
@@ -125,8 +130,8 @@ namespace RealEstateApp.Services.Repository
                 Email = "sbyron@pluralsight.com",
                 Phone = "02 8090 6412"
             },
-            //NeighbourhoodUrl = "https://en.wikipedia.org/wiki/Collaroy,_New_South_Wales",
-            //ContractFilePath = _contractFilePath,
+            NeighbourhoodUrl = "https://en.wikipedia.org/wiki/Collaroy,_New_South_Wales",
+            ContractFilePath = _contractFilePath,
             Aspect = "North"
         },
         new Property
@@ -143,8 +148,8 @@ namespace RealEstateApp.Services.Repository
                 Email = "joaks@pluralsight.com",
                 Phone = "90541823"
             },
-            //NeighbourhoodUrl = "https://en.wikipedia.org/wiki/Collaroy,_New_South_Wales",
-            //ContractFilePath = _contractFilePath,
+            NeighbourhoodUrl = "https://en.wikipedia.org/wiki/Collaroy,_New_South_Wales",
+            ContractFilePath = _contractFilePath,
             Aspect = "West"
         }
     };
@@ -171,6 +176,23 @@ namespace RealEstateApp.Services.Repository
                     ImageUrl = $"{GlobalSettings.Instance.ImageBaseUrl}agent_1.png"
                 }
             };
+        }
+
+        private async void LoadFiles()
+        {
+            var folder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            var destinationFilePath = Path.Combine(folder, "contract.pdf");
+
+            _contractFilePath = destinationFilePath;
+
+            using (var stream = await FileSystem.OpenAppPackageFileAsync("contract.pdf"))
+            {
+                var file = File.Create(destinationFilePath);
+
+                await stream.CopyToAsync(file);
+
+                file.Close();
+            }
         }
 
         private List<string> GetPropertyImageUrls(int index)
