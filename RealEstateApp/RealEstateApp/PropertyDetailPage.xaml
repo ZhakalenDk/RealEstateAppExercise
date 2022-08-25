@@ -30,10 +30,21 @@
             <!--Price-->
             <Label
                 Grid.Row="1"
+                VerticalOptions="Center"
                 FontAttributes="Bold"
                 FontSize="16"
                 LineBreakMode="NoWrap"
                 Text="{Binding Property.Price, StringFormat='{0:C0}'}" />
+            <StackLayout Orientation="Horizontal"
+                         Grid.Row="1"
+                         HorizontalOptions="EndAndExpand">
+                <Button FontFamily="FA-solid"
+                        Text="{x:Static fa:IconFont.MapMarkedAlt}"
+                        Clicked="OpenMaps"/>
+                <Button FontFamily="FA-solid"
+                        Text="{x:Static fa:IconFont.Directions}"
+                        Clicked="OpenMapWithNavigation"/>
+            </StackLayout>
             <!--Address-->
             <Label
                 Grid.Row="2"

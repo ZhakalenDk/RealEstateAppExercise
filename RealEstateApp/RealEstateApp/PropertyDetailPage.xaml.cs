@@ -112,5 +112,49 @@ namespace RealEstateApp
                 await DisplayAlert("Whoops", "Feature is not supported by your system", "OK");
             }
         }
+
+        private async void OpenMaps(object sender, EventArgs e)
+        {
+            try
+            {
+                var marker = (await Geocoding.GetPlacemarksAsync(Property.Latitude.Value, Property.Longitude.Value))
+                .FirstOrDefault();
+
+                await Map.OpenAsync(marker);
+            }
+            catch (FeatureNotSupportedException)
+            {
+                //  Ignore for now
+            }
+            catch (FeatureNotEnabledException)
+            {
+                //  Ignore for now
+            }
+        }
+
+        private async void OpenMapWithNavigation(object sender, EventArgs e)
+        {
+            try
+            {
+                var options = new MapLaunchOptions
+                {
+                    Name = Property.Address,
+                    NavigationMode = NavigationMode.Driving
+                };
+
+                var marker = (await Geocoding.GetPlacemarksAsync(Property.Latitude.Value, Property.Longitude.Value))
+                    .FirstOrDefault();
+
+                await Map.OpenAsync(marker, options);
+            }
+            catch (FeatureNotSupportedException)
+            {
+                //  Ignore for now
+            }
+            catch (FeatureNotEnabledException)
+            {
+                //  Ignore for now
+            }
+        }
     }
 }
