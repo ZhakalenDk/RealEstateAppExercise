@@ -16,6 +16,16 @@ namespace RealEstateApp
             var container = TinyIoCContainer.Current;
             container.Register<IRepository, MockRepository>();
 
+            if (Preferences.ContainsKey(nameof(GlobalSettings.SeaLevelPressure)))
+                GlobalSettings.Instance.SeaLevelPressure = Preferences.Get(nameof(GlobalSettings.SeaLevelPressure), ( double )0);
+            else
+                Preferences.Set(nameof(GlobalSettings.SeaLevelPressure), 1021.5);
+
+            if (Preferences.ContainsKey(nameof(GlobalSettings.UseGeolocationForBarometer)))
+                GlobalSettings.Instance.UseGeolocationForBarometer = Preferences.Get(nameof(GlobalSettings.UseGeolocationForBarometer), true);
+            else
+                Preferences.Set(nameof(GlobalSettings.UseGeolocationForBarometer), true);
+
             MainPage = new AppShell();
         }
 

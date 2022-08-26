@@ -19,6 +19,8 @@ namespace RealEstateApp
             InitializeComponent();
 
             BindingContext = this;
+
+            UseGeolocation = GlobalSettings.Instance.UseGeolocationForBarometer;
         }
 
         private double _currentPressure;
@@ -63,6 +65,8 @@ namespace RealEstateApp
             }
         }
 
+        public bool UseGeolocation { get; }
+
         public ObservableCollection<BarometerMeasurement> Measurements { get; set; } = new ObservableCollection<BarometerMeasurement>();
 
         protected override void OnAppearing()
@@ -80,21 +84,28 @@ namespace RealEstateApp
         private async void ReadData(object sender, BarometerChangedEventArgs e)
         {
             CurrentPressure = e.Reading.PressureInHectopascals;
-            var backupAltitude = (44307.694 * (1 - Math.Pow(CurrentPressure / 1021.5, 0.190284)));  //  In case something goes wrng when collecting altitude
+            var backupAltitude = (44307.694 * (1 - Math.Pow(CurrentPressure / GlobalSettings.Instance.SeaLevelPressure, 0.190284)));  //  In case something goes wrng when collecting altitude
 
-            try
+            if (UseGeolocation)
             {
-                Location position = (await Geolocation.GetLocationAsync());
-                AltitudeInMeters = ((position.Altitude.HasValue && position.Altitude.Value != 0) ? (position.Altitude.Value) : (backupAltitude));
+                try
+                {
+                    Location position = (await Geolocation.GetLocationAsync());
+                    AltitudeInMeters = ((position.Altitude.HasValue && position.Altitude.Value != 0) ? (position.Altitude.Value) : (backupAltitude));
+                }
+                catch (FeatureNotSupportedException)
+                {
+                    AltitudeInMeters = backupAltitude;
+                }
+                catch (FeatureNotEnabledException)
+                {
+                    AltitudeInMeters = backupAltitude;
+                }
+
+                return;
             }
-            catch (FeatureNotSupportedException)
-            {
-                AltitudeInMeters = backupAltitude;
-            }
-            catch (FeatureNotEnabledException)
-            {
-                AltitudeInMeters = backupAltitude;
-            }
+
+            AltitudeInMeters = backupAltitude;
         }
 
         private void SaveData(object sender, EventArgs e)

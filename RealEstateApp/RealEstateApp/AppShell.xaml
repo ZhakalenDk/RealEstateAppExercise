@@ -28,5 +28,12 @@
                                  Color="Black"/>
             </ShellContent.Icon>
         </ShellContent>
+        <ShellContent Title="Settings" ContentTemplate="{DataTemplate views:SettingsPage}">
+            <ShellContent.Icon>
+                <FontImageSource FontFamily="FA-solid"
+                                 Glyph="{x:Static icons:IconFont.Cog}"
+                                 Color="Black"/>
+            </ShellContent.Icon>
+        </ShellContent>
     </FlyoutItem>
 </Shell>

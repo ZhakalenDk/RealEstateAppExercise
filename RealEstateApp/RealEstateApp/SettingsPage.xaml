@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RealEstateApp.SettingsPage"
+             xmlns:converters="clr-namespace:RealEstateApp.Converters">
+    <TableView>
+        <TableRoot>
+            <TableSection Title="Barometer Settings">
+                <EntryCell Label="Sea Level Pressure" Text="{Binding SeaLevelSetting}" Keyboard="Numeric"/>
+                <SwitchCell Text="Use Geolocation Altitude" On="{Binding UseGeolocationForBarometer}"/>
+            </TableSection>
+        </TableRoot>
+    </TableView>
+</ContentPage>

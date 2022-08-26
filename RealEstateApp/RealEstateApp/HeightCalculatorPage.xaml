@@ -32,6 +32,9 @@
 
             <Label HorizontalOptions="CenterAndExpand"
                    VerticalOptions="EndAndExpand"
+                   Text="{Binding UseGeolocation, StringFormat='Using Geolocation: {0}'}"/>
+            <Label HorizontalOptions="CenterAndExpand"
+                   VerticalOptions="EndAndExpand"
                    Text="{Binding CurrentPressure, StringFormat='Current Pressure: {0:f2}'}"/>
         </StackLayout>
     </ContentPage.Content>
